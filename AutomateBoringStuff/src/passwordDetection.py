@@ -14,22 +14,19 @@ its strength.
 
 import re
 
-regex1 = re.compile(r'\w{8,}')
-regex2 = re.compile(r'\w*[a-z]+\w*')
-regex3 = re.compile(r'\w*[A-Z]+\w*')
-regex4 = re.compile(r'\w*[0-9]+\w*')
+regexPassword = re.compile(r'''
+                            ^
+                            (?=.*[A-Z])
+                            (?=.*[a-z])
+                            (?=.*[0-9])
+                            .{8,}
+                            $
+                            ''', re.VERBOSE)
 
 def check(password):
-    m = regex1.match(password)
+    m = regexPassword.match(password)
     if m == None:
         return False
-    elif regex2.match(password) == None:
-        return False
-    elif regex3.match(password) == None:
-        return False
-    elif regex4.match(password) == None:
-        return False
-    
     return True
 
 if __name__ == '__main__':
