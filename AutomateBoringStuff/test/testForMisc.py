@@ -35,7 +35,7 @@ class Test(unittest.TestCase):
         msg = 'testStingStripDefault2'
         testString = '   Hello World!!! 123'
         expect = '   Hello World!!! '
-        actual = myStringStrip.strip(testString, rev='\d')
+        actual = myStringStrip.strip(testString, rev='123')
         self.assertEqual(expect, actual, msg)
 
 
