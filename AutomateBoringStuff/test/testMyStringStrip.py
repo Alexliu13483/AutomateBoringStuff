@@ -38,6 +38,13 @@ class Test(unittest.TestCase):
         actual = myStringStrip.strip(testString, rev='123')
         self.assertEqual(expect, actual, msg)
 
+    def testStingStripWithSpecificRev1(self):
+        msg = 'testStingStripDefault2'
+        testString = '   Hello World!!! 111'
+        expect = '   Hello World!!! '
+        actual = myStringStrip.strip(testString, rev='123')
+        self.assertEqual(expect, actual, msg)
+
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
