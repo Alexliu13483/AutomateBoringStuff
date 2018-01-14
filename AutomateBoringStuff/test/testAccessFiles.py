@@ -19,14 +19,14 @@ class Test(unittest.TestCase):
 
 
     def test_totalSizeOfFiles_withoutSub(self):
-        testPath = r'C:\Temp\TestPython\TEST'
-        expect = 2892967
+        testPath = r'.\testdata\testfor_getTotalSize\subfolder'
+        expect = 55026
         result = automationFileSystem.getTotalSize(testPath)
         self.assertEqual(expect, result, 'test_totalSizeOfFiles_withoutSub')
 
     def test_totalSizeOfFiles_withSub(self):
-        testPath = r'C:\Temp\TestPython\TEST_Sub'
-        expect = 2918212
+        testPath = r'.\testdata\testfor_getTotalSize'
+        expect = 226201
         result = automationFileSystem.getTotalSize(testPath)
         self.assertEqual(expect, result, 'test_totalSizeOfFiles_withSub')
 
