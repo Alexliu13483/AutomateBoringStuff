@@ -26,7 +26,7 @@ class Test(unittest.TestCase):
 
     def test_totalSizeOfFiles_withSub(self):
         testPath = r'.\testdata\testfor_getTotalSize'
-        expect = 226201
+        expect = 223441
         result = automationFileSystem.getTotalSize(testPath)
         self.assertEqual(expect, result, 'test_totalSizeOfFiles_withSub')
 
