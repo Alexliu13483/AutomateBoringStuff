@@ -1,3 +1,4 @@
+#! Python3
 '''
 Created on 2017-12-22
 Automate the boring stuff exercise
