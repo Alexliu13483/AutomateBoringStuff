@@ -12,10 +12,10 @@ import sys
 import captureOutput
 
 class Test(unittest.TestCase):
-
+    shelvefilename = mcb.shelvefilename
 
     def setUp(self):
-        mcbShelf = shelve.open('mcb')
+        mcbShelf = shelve.open(self.shelvefilename)
         mcbShelf.clear()
         mcbShelf.close()
 
@@ -38,7 +38,7 @@ class Test(unittest.TestCase):
     def test_noInputParameter(self):
         expect = 'he program will save each piece of clipboard text under a keyword.\n Command Format: mcb [save|list] <keyword>'
         sys.argv = ['']
-        with captureOutput.captured_output() as (out, err):
+        with captureOutput.captured_output() as (out, _):
             importlib.reload(mcb)
         # This can go inside or outside the `with` block
         output = out.getvalue().strip()
@@ -51,7 +51,7 @@ class Test(unittest.TestCase):
         pyperclip.copy(expect)
         sys.argv = ['', 'save', 'one']
         importlib.reload(mcb)
-        mcbShelf = shelve.open('mcb')
+        mcbShelf = shelve.open(self.shelvefilename)
         self.assertEqual(expect, mcbShelf['one'], 'saveOnePicecOfData')
         mcbShelf.close()
         
@@ -59,7 +59,7 @@ class Test(unittest.TestCase):
     def test_saveTwoPicecOfData(self):
         expectData, expectKeys = self.prepareTwoData()
         
-        mcbShelf = shelve.open('mcb')
+        mcbShelf = shelve.open(self.shelvefilename)
         self.assertEqual(expectData[0], mcbShelf[expectKeys[0]], 'test_saveTwoPicecOfData_0')
         self.assertEqual(expectData[1], mcbShelf[expectKeys[1]], 'test_saveTwoPicecOfData_1')
         mcbShelf.close()
@@ -70,7 +70,7 @@ class Test(unittest.TestCase):
 
         sys.argv = ['', 'list']
         importlib.reload(mcb)
-        mcbShelf = shelve.open('mcb')
+        mcbShelf = shelve.open(self.shelvefilename)
         self.assertEqual(expect, pyperclip.paste(), 'listStoredData')
         mcbShelf.close()
 
@@ -79,7 +79,7 @@ class Test(unittest.TestCase):
 
         sys.argv = ['', expectKeys[0]]
         importlib.reload(mcb)
-        mcbShelf = shelve.open('mcb')
+        mcbShelf = shelve.open(self.shelvefilename)
         self.assertEqual(expectData[0], pyperclip.paste(), 'getStoredData')
         mcbShelf.close()
 

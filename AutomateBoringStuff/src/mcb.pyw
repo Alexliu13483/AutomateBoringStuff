@@ -25,7 +25,8 @@ Created on 2018-01-17
 '''
 import shelve, pyperclip, sys
 
-mcbShelf = shelve.open('mcb')
+shelvefilename = r'.\data\mcb'
+mcbShelf = shelve.open(shelvefilename)
 
 # Save clipboard content.
 if len(sys.argv) == 3 and sys.argv[1].lower() == 'save':
