@@ -9,6 +9,7 @@ import shelve
 import importlib
 import mcb
 import sys
+import captureOutput
 
 class Test(unittest.TestCase):
 
@@ -32,6 +33,17 @@ class Test(unittest.TestCase):
         sys.argv = ['', 'save', expectKeys[1]]
         importlib.reload(mcb)
         return expectData, expectKeys
+    
+    # Test cases
+    def test_noInputParameter(self):
+        expect = 'he program will save each piece of clipboard text under a keyword.\n Command Format: mcb [save|list] <keyword>'
+        sys.argv = ['']
+        with captureOutput.captured_output() as (out, err):
+            importlib.reload(mcb)
+        # This can go inside or outside the `with` block
+        output = out.getvalue().strip()
+
+        self.assertEqual(expect, output)
 
 
     def test_saveOnePicecOfData(self):
