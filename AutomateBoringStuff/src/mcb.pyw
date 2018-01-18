@@ -1,4 +1,3 @@
-#! Python3
 '''
 mcb.pyw
 SPEC:
