@@ -36,7 +36,7 @@ class Test(unittest.TestCase):
     
     # Test cases
     def test_noInputParameter(self):
-        expect = 'he program will save each piece of clipboard text under a keyword.\n Command Format: mcb [save|list] <keyword>'
+        expect = 'The program will save each piece of clipboard text under a keyword.\n Command Format: mcb [save|list] <keyword>'
         sys.argv = ['']
         with captureOutput.captured_output() as (out, _):
             importlib.reload(mcb)
@@ -70,17 +70,31 @@ class Test(unittest.TestCase):
 
         sys.argv = ['', 'list']
         importlib.reload(mcb)
-        mcbShelf = shelve.open(self.shelvefilename)
         self.assertEqual(expect, pyperclip.paste(), 'listStoredData')
-        mcbShelf.close()
 
     def test_getStoredData(self):
         expectData, expectKeys = self.prepareTwoData()
 
         sys.argv = ['', expectKeys[0]]
         importlib.reload(mcb)
-        mcbShelf = shelve.open(self.shelvefilename)
         self.assertEqual(expectData[0], pyperclip.paste(), 'getStoredData')
+
+    def test_deleteKeywordInShelf(self):
+        _, expectKeys = self.prepareTwoData()
+
+        sys.argv = ['', 'delete', expectKeys[0]]
+        importlib.reload(mcb)
+        mcbShelf = shelve.open(self.shelvefilename)
+        self.assertFalse(expectKeys[0] in mcbShelf)
+        mcbShelf.close()
+
+    def test_deleteAllKeywordInShelf(self):
+        _, _ = self.prepareTwoData()
+
+        sys.argv = ['', 'delete']
+        importlib.reload(mcb)
+        mcbShelf = shelve.open(self.shelvefilename)
+        self.assertFalse(bool(mcbShelf))
         mcbShelf.close()
 
 if __name__ == "__main__":
